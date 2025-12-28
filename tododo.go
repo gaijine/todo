@@ -35,7 +35,7 @@ func menu() {
 			fmt.Scanln(&text)
 			task := Task{Text: text, Done: false}
 			list = append(list, task)
-			log.Printf("[INFO] task created: %v", task.Text)
+			log.Printf("[INFO] task created: %s", task.Text)
 		case 2:
 			showTasks()
 		case 3:
@@ -75,7 +75,7 @@ func markDoneTask() {
 		if list[choice-1].Done != true {
 			list[choice-1].Done = true
 			fmt.Println("-------------------------")
-			log.Printf("[INFO] task completed: id=%v, text=%v", choice, list[choice-1].Text)
+			log.Printf("[INFO] task completed: id=%d, text=%s", choice, list[choice-1].Text)
 			fmt.Println("задача выполнена")
 			fmt.Println("-------------------------")
 		} else {
@@ -112,7 +112,7 @@ func unmarkDoneTask() {
 		if list[choice-1].Done != false {
 			list[choice-1].Done = false
 			fmt.Println("-------------------------")
-			log.Printf("[INFO] unmarking completed successfully: id=%v, text=%v", choice, list[choice-1].Text)
+			log.Printf("[INFO] task unmarked: id=%d, text=%s", choice, list[choice-1].Text)
 			fmt.Println("отметка убрана")
 			fmt.Println("-------------------------")
 		} else {
