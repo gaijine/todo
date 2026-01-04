@@ -15,6 +15,7 @@ func Menu() {
 		fmt.Println("[3] пометить выполненной")
 		fmt.Println("[4] снять отметку")
 		fmt.Println("[5] удалить задачу")
+		fmt.Println("[6] изменить текст задачи")
 		fmt.Println("[0] выйти")
 		fmt.Println("-------------------------")
 		fmt.Scanln(&choice)
@@ -24,20 +25,22 @@ func Menu() {
 		case 1:
 			tasks.AddTask()
 		case 2:
-			tasks.ShowTasks()
+			tasks.ShowTasksMenu()
 		case 3:
 			tasks.MarkDoneTask()
 		case 4:
 			tasks.UnmarkDoneTask()
 		case 5:
 			tasks.DeleteTask()
+		case 6:
+			tasks.UpdateTask()
 		case 0:
 			log.Println("[INFO] application finished")
 			return
 		default:
 			fmt.Println("-------------------------")
 			log.Println("[ERROR] invalid menu number")
-			fmt.Println("ввели неверный номер")
+			fmt.Println("выбран неверный номер")
 			fmt.Println("-------------------------")
 		}
 
