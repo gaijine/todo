@@ -14,8 +14,8 @@ func Menu() {
 		fmt.Println("[2] вывести список задач")
 		fmt.Println("[3] пометить выполненной")
 		fmt.Println("[4] снять отметку")
-		fmt.Println("[5] удалить задачу")
-		fmt.Println("[6] изменить текст задачи")
+		fmt.Println("[5] изменить текст задачи")
+		fmt.Println("[6] удалить задачу")
 		fmt.Println("[0] выйти")
 		fmt.Println("-------------------------")
 		fmt.Scanln(&choice)
@@ -31,9 +31,9 @@ func Menu() {
 		case 4:
 			tasks.UnmarkDoneTask()
 		case 5:
-			tasks.DeleteTask()
-		case 6:
 			tasks.UpdateTask()
+		case 6:
+			tasks.DeleteTask()
 		case 0:
 			log.Println("[INFO] application finished")
 			return

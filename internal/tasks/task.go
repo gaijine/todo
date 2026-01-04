@@ -8,60 +8,15 @@ import (
 	"strings"
 )
 
-func UpdateTask() {
-	if len(List) == 0 {
-		fmt.Println("-------------------------")
-		log.Println("[WARN] task list is empty")
-		fmt.Println("список задач пуст")
-		return
-	}
-
-	var choice int
-	ShowTasks()
-	fmt.Println("-------------------------")
-	fmt.Println("выберите какую задачу изменить:")
-	fmt.Println("-------------------------")
-	fmt.Scanln(&choice)
-
-	if choice >= 1 && choice <= len(List) {
-
-		reader := bufio.NewReader(os.Stdin) // создаём считыватель для ввода текста
-		oldText := List[choice-1].Text
-
-		for {
-			fmt.Println("-------------------------")
-			fmt.Println("введите новый текст задачи:")
-
-			newText, _ := reader.ReadString('\n') // считываем строку с пробелами
-			newText = strings.TrimSpace(newText)  // <-- убираем все лишние пробелы и перенос строки
-
-			if newText == "" {
-				fmt.Println("-------------------------")
-				fmt.Printf("поле не заполнено, \nвведите текст повторно:\n")
-			} else {
-				List[choice-1].Text = newText
-				fmt.Println("-------------------------")
-				log.Printf("[INFO] task <%s> changed to <%s> successfully", oldText, newText)
-				fmt.Printf("задача <%s> успешно изменена на <%s>\n", oldText, newText)
-				return
-			}
-		}
-	} else {
-		fmt.Println("-------------------------")
-		log.Println("[ERROR] invalid number task")
-		fmt.Println("выбран неверный номер")
-	}
-}
-
 func AddTask() {
-	reader := bufio.NewReader(os.Stdin) // создаём считыватель для ввода текста
+	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("-------------------------")
 	fmt.Println("введите текст задачи:")
 	fmt.Println("-------------------------")
 
-	text, _ := reader.ReadString('\n') // считываем строку с пробелами
-	text = strings.TrimSpace(text)     // <-- убираем все лишние пробелы и перенос строки
+	text, _ := reader.ReadString('\n')
+	text = strings.TrimSpace(text)
 
 	task := Task{Text: text, Done: false}
 	List = append(List, task)
@@ -70,7 +25,33 @@ func AddTask() {
 	fmt.Printf("задача: <%s> успешно добавлена\n", task.Text)
 }
 
-func DeleteTask() {
+func ShowTasksMenu() {
+	fmt.Println("-------------------------")
+	fmt.Println("выберите какие задачи показать:")
+	fmt.Println("[1] вывести все задачи")
+	fmt.Println("[2] только выполненные")
+	fmt.Println("[3] только невыполненные")
+	fmt.Println("-------------------------")
+
+	var choice int
+	fmt.Scanln(&choice)
+
+	switch choice {
+	case 1:
+		ShowTasks()
+	case 2:
+		FilterTasks(true)
+	case 3:
+		FilterTasks(false)
+	default:
+		fmt.Println("-------------------------")
+		log.Println("[ERROR] invalid menu number")
+		fmt.Println("выбран неверный номер")
+		fmt.Println("-------------------------")
+	}
+}
+
+func ShowTasks() {
 	if len(List) == 0 {
 		fmt.Println("-------------------------")
 		log.Println("[WARN] task list is empty")
@@ -78,23 +59,48 @@ func DeleteTask() {
 		return
 	}
 
-	var choice int
-	ShowTasks()
-	fmt.Println("-------------------------")
-	fmt.Println("выберите какую задачу нужно удалить")
-	fmt.Println("-------------------------")
-	fmt.Scanln(&choice)
+	for i, task := range List {
+		if task.Done == true {
+			fmt.Println(i+1, "[x]", task.Text)
+		} else {
+			fmt.Println(i+1, "[ ]", task.Text)
+		}
+	}
+}
 
-	if choice >= 1 && choice <= len(List) {
-		deletedTask := List[choice-1]
-		List = append(List[0:choice-1], List[choice:]...)
+func FilterTasks(showDone bool) {
+	if len(List) == 0 {
 		fmt.Println("-------------------------")
-		log.Printf("[INFO] task deleted: id=%d, text=%s", choice, deletedTask.Text)
-		fmt.Printf("задача: <%s> успешно удалена\n", deletedTask.Text)
+		log.Println("[WARN] task list is empty")
+		fmt.Println("список задач пуст")
+		return
+	}
+
+	found := false
+
+	if showDone == true {
+		fmt.Println("-------------------------")
+		fmt.Println("выполненные задачи:")
 	} else {
 		fmt.Println("-------------------------")
-		log.Println("[ERROR] invalid number task")
-		fmt.Println("выбран неверный номер")
+		fmt.Println("невыполненные задачи:")
+	}
+
+	for i, task := range List {
+		if task.Done == showDone {
+			mark := "[ ]"
+			if task.Done {
+				mark = "[x]"
+			}
+			fmt.Println(i+1, mark, task.Text)
+			found = true
+		}
+
+	}
+
+	if !found {
+		fmt.Println("-------------------------")
+		fmt.Println("задач с таким статусом нет")
 	}
 }
 
@@ -164,81 +170,76 @@ func UnmarkDoneTask() {
 	}
 }
 
-func FilterTasks(showDone bool) {
+func UpdateTask() {
 	if len(List) == 0 {
 		fmt.Println("-------------------------")
 		log.Println("[WARN] task list is empty")
 		fmt.Println("список задач пуст")
 		return
 	}
-
-	found := false
-
-	if showDone == true {
-		fmt.Println("-------------------------")
-		fmt.Println("выполненные задачи:")
-	} else {
-		fmt.Println("-------------------------")
-		fmt.Println("невыполненные задачи:")
-	}
-
-	for i, task := range List {
-		if task.Done == showDone {
-			mark := "[ ]"
-			if task.Done {
-				mark = "[x]"
-			}
-			fmt.Println(i+1, mark, task.Text)
-			found = true
-		}
-
-	}
-
-	if !found {
-		fmt.Println("-------------------------")
-		fmt.Println("задач с таким статусом нет")
-	}
-}
-
-func ShowTasks() {
-	if len(List) == 0 {
-		fmt.Println("-------------------------")
-		log.Println("[WARN] task list is empty")
-		fmt.Println("список задач пуст")
-		return
-	}
-
-	for i, task := range List {
-		if task.Done == true {
-			fmt.Println(i+1, "[x]", task.Text)
-		} else {
-			fmt.Println(i+1, "[ ]", task.Text)
-		}
-	}
-}
-
-func ShowTasksMenu() {
-	fmt.Println("-------------------------")
-	fmt.Println("выберите какие задачи показать:")
-	fmt.Println("[1] вывести все задачи")
-	fmt.Println("[2] только выполненные")
-	fmt.Println("[3] только невыполненные")
-	fmt.Println("-------------------------")
 
 	var choice int
+	ShowTasks()
+	fmt.Println("-------------------------")
+	fmt.Println("выберите какую задачу изменить:")
+	fmt.Println("-------------------------")
 	fmt.Scanln(&choice)
 
-	switch choice {
-	case 1:
-		ShowTasks()
-	case 2:
-		FilterTasks(true)
-	case 3:
-		FilterTasks(false)
-	default:
+	if choice >= 1 && choice <= len(List) {
+
+		reader := bufio.NewReader(os.Stdin) // создаём считыватель для ввода текста
+		oldText := List[choice-1].Text
+
 		fmt.Println("-------------------------")
-		log.Println("[ERROR] invalid menu number")
+		fmt.Println("введите новый текст задачи:")
+
+		for {
+
+			newText, _ := reader.ReadString('\n') // считываем строку с пробелами
+			newText = strings.TrimSpace(newText)  // <-- убираем все лишние пробелы и перенос строки
+
+			if newText == "" {
+				fmt.Println("-------------------------")
+				fmt.Printf("поле не заполнено, \nвведите текст повторно:\n")
+			} else {
+				List[choice-1].Text = newText
+				fmt.Println("-------------------------")
+				log.Printf("[INFO] task <%s> changed to <%s> successfully", oldText, newText)
+				fmt.Printf("задача <%s> успешно изменена на <%s>\n", oldText, newText)
+				return
+			}
+		}
+	} else {
+		fmt.Println("-------------------------")
+		log.Println("[ERROR] invalid number task")
 		fmt.Println("выбран неверный номер")
+	}
+}
+
+func DeleteTask() {
+	if len(List) == 0 {
 		fmt.Println("-------------------------")
+		log.Println("[WARN] task list is empty")
+		fmt.Println("список задач пуст")
+		return
+	}
+
+	var choice int
+	ShowTasks()
+	fmt.Println("-------------------------")
+	fmt.Println("выберите какую задачу нужно удалить")
+	fmt.Println("-------------------------")
+	fmt.Scanln(&choice)
+
+	if choice >= 1 && choice <= len(List) {
+		deletedTask := List[choice-1]
+		List = append(List[0:choice-1], List[choice:]...)
+		fmt.Println("-------------------------")
+		log.Printf("[INFO] task deleted: id=%d, text=%s", choice, deletedTask.Text)
+		fmt.Printf("задача: <%s> успешно удалена\n", deletedTask.Text)
+	} else {
+		fmt.Println("-------------------------")
+		log.Println("[ERROR] invalid number task")
+		fmt.Println("выбран неверный номер")
 	}
 }
