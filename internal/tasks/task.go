@@ -1,8 +1,11 @@
 package tasks
 
 import (
+	"bufio"
 	"fmt"
 	"log"
+	"os"
+	"strings"
 )
 
 func UpdateTask() {
@@ -21,16 +24,20 @@ func UpdateTask() {
 	fmt.Scanln(&choice)
 
 	if choice >= 1 && choice <= len(List) {
-		var newText string
+
+		reader := bufio.NewReader(os.Stdin) // создаём считыватель для ввода текста
 		oldText := List[choice-1].Text
-		fmt.Println("-------------------------")
-		fmt.Println("введите новый текст задачи:")
-		fmt.Scanln(&newText)
+
 		for {
+			fmt.Println("-------------------------")
+			fmt.Println("введите новый текст задачи:")
+
+			newText, _ := reader.ReadString('\n') // считываем строку с пробелами
+			newText = strings.TrimSpace(newText)  // <-- убираем все лишние пробелы и перенос строки
+
 			if newText == "" {
 				fmt.Println("-------------------------")
 				fmt.Printf("поле не заполнено, \nвведите текст повторно:\n")
-				fmt.Scanln(&newText)
 			} else {
 				List[choice-1].Text = newText
 				fmt.Println("-------------------------")
@@ -47,11 +54,15 @@ func UpdateTask() {
 }
 
 func AddTask() {
-	var text string
+	reader := bufio.NewReader(os.Stdin) // создаём считыватель для ввода текста
+
 	fmt.Println("-------------------------")
 	fmt.Println("введите текст задачи:")
 	fmt.Println("-------------------------")
-	fmt.Scanln(&text)
+
+	text, _ := reader.ReadString('\n') // считываем строку с пробелами
+	text = strings.TrimSpace(text)     // <-- убираем все лишние пробелы и перенос строки
+
 	task := Task{Text: text, Done: false}
 	List = append(List, task)
 	fmt.Println("-------------------------")
