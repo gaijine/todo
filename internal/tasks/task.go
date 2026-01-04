@@ -60,11 +60,11 @@ func ShowTasks() {
 	}
 
 	for i, task := range List {
+		mark := "[ ]"
 		if task.Done == true {
-			fmt.Println(i+1, "[x]", task.Text)
-		} else {
-			fmt.Println(i+1, "[ ]", task.Text)
+			mark = "[x]"
 		}
+		fmt.Println(i+1, mark, task.Text)
 	}
 }
 
