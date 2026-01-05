@@ -1,0 +1,5 @@
+2026/01/05 18:57:10 [INFO] application started
+2026/01/05 18:57:29 [INFO] task created: <выпить воды>
+2026/01/05 18:57:48 [INFO] task completed: id=5, text=<выпить воды>
+2026/01/05 18:58:00 [INFO] task completed: id=3, text=<принять поступивший товар>
+2026/01/05 18:58:42 [INFO] application finished

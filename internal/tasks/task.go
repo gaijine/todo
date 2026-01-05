@@ -9,19 +9,25 @@ import (
 )
 
 func AddTask() {
-	reader := bufio.NewReader(os.Stdin)
+	reader := bufio.NewReader(os.Stdin) // Создаём новый объект "reader" типа bufio.Reader, который позволяет удобно считывать текст
+	// из стандартного ввода (то есть с клавиатуры).
+	// bufio.Reader помогает читать данные построчно или по частям, а не по одному символу.
 
 	fmt.Println("-------------------------")
 	fmt.Println("введите текст задачи:")
 	fmt.Println("-------------------------")
 
-	text, _ := reader.ReadString('\n')
-	text = strings.TrimSpace(text)
+	text, _ := reader.ReadString('\n') // С помощью reader читаем строку до символа '\n' (перенос строки), то есть до момента,
+	// когда пользователь нажмёт Enter. ReadString возвращает две вещи: считанную строку и ошибку, но здесь ошибку игнорируем (_),
+	// так как не обрабатываем её специально.
+	text = strings.TrimSpace(text) // Функция strings.TrimSpace убирает все пробелы и символы переноса строки с начала и конца строки.
+	// Это нужно, чтобы убрать лишние пробелы и особенно символ '\n', который остался в конце после нажатия Enter,
+	// и получить "чистый" текст без пробелов вокруг.
 
 	task := Task{Text: text, Done: false}
 	List = append(List, task)
 	fmt.Println("-------------------------")
-	log.Printf("[INFO] task created: %s", task.Text)
+	log.Printf("[INFO] task created: <%s>", task.Text)
 	fmt.Printf("задача: <%s> успешно добавлена\n", task.Text)
 }
 
@@ -95,7 +101,6 @@ func FilterTasks(showDone bool) {
 			fmt.Println(i+1, mark, task.Text)
 			found = true
 		}
-
 	}
 
 	if !found {
@@ -123,7 +128,7 @@ func MarkDoneTask() {
 		if List[choice-1].Done != true {
 			List[choice-1].Done = true
 			fmt.Println("-------------------------")
-			log.Printf("[INFO] task completed: id=%d, text=%s", choice, List[choice-1].Text)
+			log.Printf("[INFO] task completed: id=%d, text=<%s>", choice, List[choice-1].Text)
 			fmt.Printf("задача: <%s> выполнена\n", List[choice-1].Text)
 		} else {
 			fmt.Println("-------------------------")
@@ -156,7 +161,7 @@ func UnmarkDoneTask() {
 		if List[choice-1].Done != false {
 			List[choice-1].Done = false
 			fmt.Println("-------------------------")
-			log.Printf("[INFO] task unmarked: id=%d, text=%s", choice, List[choice-1].Text)
+			log.Printf("[INFO] task unmarked: id=%d, text=<%s>", choice, List[choice-1].Text)
 			fmt.Printf("отметка выполнения задачи: <%s> снята\n", List[choice-1].Text)
 		} else {
 			fmt.Println("-------------------------")
@@ -235,7 +240,7 @@ func DeleteTask() {
 		deletedTask := List[choice-1]
 		List = append(List[0:choice-1], List[choice:]...)
 		fmt.Println("-------------------------")
-		log.Printf("[INFO] task deleted: id=%d, text=%s", choice, deletedTask.Text)
+		log.Printf("[INFO] task deleted: id=%d, text=<%s>", choice, deletedTask.Text)
 		fmt.Printf("задача: <%s> успешно удалена\n", deletedTask.Text)
 	} else {
 		fmt.Println("-------------------------")
