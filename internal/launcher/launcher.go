@@ -24,16 +24,21 @@ func Menu() {
 
 		case 1:
 			tasks.AddTask()
+			tasks.SaveTasksToFile()
 		case 2:
 			tasks.ShowTasksMenu()
 		case 3:
 			tasks.MarkDoneTask()
+			tasks.SaveTasksToFile()
 		case 4:
 			tasks.UnmarkDoneTask()
+			tasks.SaveTasksToFile()
 		case 5:
 			tasks.UpdateTask()
+			tasks.SaveTasksToFile()
 		case 6:
 			tasks.DeleteTask()
+			tasks.SaveTasksToFile()
 		case 0:
 			log.Println("[INFO] application finished")
 			return
