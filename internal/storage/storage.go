@@ -9,7 +9,7 @@ import (
 
 func LoadTasksFromFile() {
 
-	file, err := os.Open("tasks.txt") // пытаемся открыть файл "tasks.txt" для чтения
+	file, err := os.Open("data/tasks.txt") // пытаемся открыть файл "tasks.txt" для чтения
 
 	if err != nil { // если файла нет или произошла ошибка при открытии — просто выходим из функции
 		return // это нормально, например, при первом запуске программы
@@ -24,6 +24,9 @@ func LoadTasksFromFile() {
 		parts := strings.Split(line, "|") // разбиваем строку по символу "|" на две части:
 		// parts[0] — "1" или "0" (Done)
 		// parts[1] — текст задачи
+		if len(parts) < 2 { // если строка некорректная — пропускаем
+			continue
+		}
 
 		done := parts[0] == "1"                        // превратили "1"/"0" в bool ("1" → true, "0" → false)
 		task := tasks.Task{Text: parts[1], Done: done} // создаём новую задачу Task с текстом и статусом
@@ -33,7 +36,7 @@ func LoadTasksFromFile() {
 }
 
 func SaveTasksToFile() {
-	file, err := os.Create("tasks.txt") // создаём новый файл tasks.txt или перезаписываем старый
+	file, err := os.Create("data/tasks.txt") // создаём новый файл tasks.txt или перезаписываем старый
 
 	if err != nil {
 		return // если ошибка — просто выходим
