@@ -3,6 +3,7 @@ package launcher
 import (
 	"fmt"
 	"log"
+	"todo/internal/storage"
 	"todo/internal/tasks"
 )
 
@@ -24,21 +25,21 @@ func Menu() {
 
 		case 1:
 			tasks.AddTask()
-			tasks.SaveTasksToFile()
+			storage.SaveTasksToFile()
 		case 2:
 			tasks.ShowTasksMenu()
 		case 3:
 			tasks.MarkDoneTask()
-			tasks.SaveTasksToFile()
+			storage.SaveTasksToFile()
 		case 4:
 			tasks.UnmarkDoneTask()
-			tasks.SaveTasksToFile()
+			storage.SaveTasksToFile()
 		case 5:
 			tasks.UpdateTask()
-			tasks.SaveTasksToFile()
+			storage.SaveTasksToFile()
 		case 6:
 			tasks.DeleteTask()
-			tasks.SaveTasksToFile()
+			storage.SaveTasksToFile()
 		case 0:
 			log.Println("[INFO] application finished")
 			return

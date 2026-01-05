@@ -3,11 +3,11 @@ package main
 import (
 	"log"
 	"todo/internal/launcher"
-	"todo/internal/tasks"
+	"todo/internal/storage"
 )
 
 func main() {
 	log.Println("[INFO] application started")
-	tasks.LoadTasksFromFile()
+	storage.LoadTasksFromFile()
 	launcher.Menu()
 }
