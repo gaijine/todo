@@ -13,10 +13,15 @@ func LoadTasksFromFile() {
 	tasks.List = nil // очистить перед загрузкой
 	// ... существующий код загрузки
 
-	file, err := os.Open("data/tasks.txt") // пытаемся открыть файл "tasks.txt" для чтения
+	err := os.MkdirAll("data", 0755) // создаём папку "data", если её нет
+	if err != nil {
+		log.Println("[ERROR] cannot create data folder")
+		return
+	}
 
-	if err != nil { // если файла нет или произошла ошибка при открытии — просто выходим из функции
-		log.Println("[WARN] tasks file not found, starting with empty list")
+	file, err := os.OpenFile("data/tasks.txt", os.O_RDWR|os.O_CREATE, 0644) // открываем файл "tasks.txt" для чтения/записи, если файла нет — создаём
+	if err != nil {
+		log.Println("[ERROR] cannot create or open tasks file")
 		return // это нормально, например, при первом запуске программы
 	}
 	defer file.Close() // гарантируем, что файл закроется автоматически, когда функция завершится
@@ -38,6 +43,10 @@ func LoadTasksFromFile() {
 		task := tasks.Task{Text: parts[1], Done: done} // создаём новую задачу Task с текстом и статусом
 		tasks.List = append(tasks.List, task)          // добавляем эту задачу в глобальный список List
 
+	}
+
+	if err := scanner.Err(); err != nil {
+		log.Println("[ERROR] reading tasks file:", err)
 	}
 
 	log.Printf("[INFO] Loaded %d tasks from file", len(tasks.List))

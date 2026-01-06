@@ -238,10 +238,22 @@ func DeleteTask() {
 
 	if choice >= 1 && choice <= len(List) {
 		deletedTask := List[choice-1]
-		List = append(List[0:choice-1], List[choice:]...)
 		fmt.Println("-------------------------")
-		log.Printf("[INFO] task deleted: id=%d, text=<%s>", choice, deletedTask.Text)
-		fmt.Printf("задача: <%s> успешно удалена\n", deletedTask.Text)
+		fmt.Printf("вы уверены что хотите удалить данную задачу: <%s> | (y/n)\n", deletedTask.Text)
+		fmt.Println("-------------------------")
+		var confirm string
+		fmt.Scanln(&confirm)
+		confirm = strings.ToLower(confirm) // превращает весь ввод в маленькие буквы
+		if confirm == "y" || confirm == "yes" {
+			List = append(List[0:choice-1], List[choice:]...)
+			fmt.Println("-------------------------")
+			log.Printf("[INFO] task deleted: id=%d, text=<%s>", choice, deletedTask.Text)
+			fmt.Printf("задача: <%s> успешно удалена\n", deletedTask.Text)
+		} else {
+			fmt.Println("-------------------------")
+			fmt.Println("удаление отменено")
+			return
+		}
 	} else {
 		fmt.Println("-------------------------")
 		log.Println("[ERROR] invalid number task")

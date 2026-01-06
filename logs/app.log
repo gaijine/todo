@@ -38,3 +38,31 @@
 2026/01/06 19:58:36 [INFO] Saved 9 tasks to file
 2026/01/06 19:59:10 [INFO] Saved 9 tasks to file
 2026/01/06 19:59:10 [INFO] application finished, task saved
+2026/01/06 20:35:34 [INFO] application started
+2026/01/06 20:35:34 [INFO] Loaded 9 tasks from file
+2026/01/06 20:35:54 [INFO] Saved 9 tasks to file
+2026/01/06 20:36:11 [INFO] Saved 9 tasks to file
+2026/01/06 20:36:11 [INFO] application finished, task saved
+2026/01/06 20:36:15 [INFO] application started
+2026/01/06 20:36:15 [INFO] Loaded 9 tasks from file
+2026/01/06 20:36:31 [INFO] Saved 9 tasks to file
+2026/01/06 20:36:42 [INFO] Saved 9 tasks to file
+2026/01/06 20:36:42 [INFO] application finished, task saved
+2026/01/06 20:36:57 [INFO] application started
+2026/01/06 20:36:57 [INFO] Loaded 9 tasks from file
+2026/01/06 20:37:10 [INFO] Saved 9 tasks to file
+2026/01/06 20:37:35 [ERROR] invalid number task
+2026/01/06 20:37:35 [INFO] Saved 9 tasks to file
+2026/01/06 20:37:36 [INFO] Saved 9 tasks to file
+2026/01/06 20:37:36 [INFO] application finished, task saved
+2026/01/06 20:37:40 [INFO] application started
+2026/01/06 20:37:40 [INFO] Loaded 9 tasks from file
+2026/01/06 20:38:09 [INFO] task deleted: id=9, text=<пойти домой>
+2026/01/06 20:38:09 [INFO] Saved 8 tasks to file
+2026/01/06 20:38:29 [INFO] Saved 8 tasks to file
+2026/01/06 20:38:29 [INFO] application finished, task saved
+2026/01/06 20:41:45 [INFO] application started
+2026/01/06 20:41:45 [INFO] Loaded 8 tasks from file
+2026/01/06 20:41:53 [ERROR] invalid menu number
+2026/01/06 20:42:19 [INFO] Saved 8 tasks to file
+2026/01/06 20:42:19 [INFO] application finished, task saved
