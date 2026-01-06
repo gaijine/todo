@@ -16,6 +16,7 @@ func LoadTasksFromFile() {
 	file, err := os.Open("data/tasks.txt") // пытаемся открыть файл "tasks.txt" для чтения
 
 	if err != nil { // если файла нет или произошла ошибка при открытии — просто выходим из функции
+		log.Println("[WARN] tasks file not found, starting with empty list")
 		return // это нормально, например, при первом запуске программы
 	}
 	defer file.Close() // гарантируем, что файл закроется автоматически, когда функция завершится
@@ -29,6 +30,7 @@ func LoadTasksFromFile() {
 		// parts[0] — "1" или "0" (Done)
 		// parts[1] — текст задачи
 		if len(parts) < 2 { // если строка некорректная — пропускаем
+			log.Println("[WARN] corrupted task line skipped:", line)
 			continue
 		}
 
@@ -46,6 +48,7 @@ func SaveTasksToFile() {
 	file, err := os.Create("data/tasks.txt") // создаём новый файл tasks.txt или перезаписываем старый
 
 	if err != nil {
+		log.Println("[ERROR] failed to create tasks file:", err)
 		return // если ошибка — просто выходим
 	}
 	defer file.Close() // гарантируем, что файл закроется в конце функции
@@ -55,8 +58,12 @@ func SaveTasksToFile() {
 		if task.Done {
 			status = "1" //если задача выполнена, ставим "1"
 		}
-		line := status + "|" + task.Text // формируем строку для файла
-		file.WriteString(line + "\n")    // записываем строку в файл с переносом на новую строку
+		line := status + "|" + task.Text        // формируем строку для файла
+		_, err := file.WriteString(line + "\n") // записываем строку в файл с переносом на новую строку
+		if err != nil {
+			log.Println("[ERROR] failed to write task to file:", err)
+			return
+		}
 	}
 	log.Printf("[INFO] Saved %d tasks to file", len(tasks.List))
 }

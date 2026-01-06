@@ -30,3 +30,11 @@
 2026/01/05 20:53:36 [INFO] task created: <выйти на джуна>
 2026/01/05 20:53:36 [INFO] Saved 8 tasks to file
 2026/01/05 20:53:43 [INFO] application finished
+2026/01/06 19:57:41 [INFO] application started
+2026/01/06 19:57:41 [INFO] Loaded 8 tasks from file
+2026/01/06 19:58:27 [INFO] task created: <пойти домой>
+2026/01/06 19:58:27 [INFO] Saved 9 tasks to file
+2026/01/06 19:58:36 [INFO] task completed: id=4, text=<добавить все в систему>
+2026/01/06 19:58:36 [INFO] Saved 9 tasks to file
+2026/01/06 19:59:10 [INFO] Saved 9 tasks to file
+2026/01/06 19:59:10 [INFO] application finished, task saved

@@ -41,7 +41,8 @@ func Menu() {
 			tasks.DeleteTask()
 			storage.SaveTasksToFile()
 		case 0:
-			log.Println("[INFO] application finished")
+			storage.SaveTasksToFile()
+			log.Println("[INFO] application finished, task saved")
 			return
 		default:
 			fmt.Println("-------------------------")
