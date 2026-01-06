@@ -2,12 +2,16 @@ package storage
 
 import (
 	"bufio"
+	"log"
 	"os"
 	"strings"
 	"todo/internal/tasks"
 )
 
 func LoadTasksFromFile() {
+
+	tasks.List = nil // очистить перед загрузкой
+	// ... существующий код загрузки
 
 	file, err := os.Open("data/tasks.txt") // пытаемся открыть файл "tasks.txt" для чтения
 
@@ -33,9 +37,12 @@ func LoadTasksFromFile() {
 		tasks.List = append(tasks.List, task)          // добавляем эту задачу в глобальный список List
 
 	}
+
+	log.Printf("[INFO] Loaded %d tasks from file", len(tasks.List))
 }
 
 func SaveTasksToFile() {
+
 	file, err := os.Create("data/tasks.txt") // создаём новый файл tasks.txt или перезаписываем старый
 
 	if err != nil {
@@ -51,4 +58,5 @@ func SaveTasksToFile() {
 		line := status + "|" + task.Text // формируем строку для файла
 		file.WriteString(line + "\n")    // записываем строку в файл с переносом на новую строку
 	}
+	log.Printf("[INFO] Saved %d tasks to file", len(tasks.List))
 }
